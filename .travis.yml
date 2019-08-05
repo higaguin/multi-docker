@@ -4,7 +4,7 @@ services:
 
 before_install:
   - docker build -t higaguin/react-test -f ./client/Dockerfile.dev ./client
-
+# s
 script:
   - docker run higaguin/react-test npm test -- --coverage
 
