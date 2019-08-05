@@ -1,0 +1,20 @@
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t higaguin/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run higaguin/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t higaguin/multi-client ./client
+  - docker build -t higaguin/multi-nginx ./nginx
+  - docker build -t higaguin/multi-server ./server
+  - docker build -t higaguin/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push higaguin/multi-client
+  - docker push higaguin/multi-nginx
+  - docker push higaguin/multi-server
+  - docker push higaguin/multi-worker
