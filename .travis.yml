@@ -19,6 +19,7 @@ after_success:
   - docker push higaguin/multi-server
   - docker push higaguin/multi-worker
 
+  # s
 deploy: 
   provider: elasticbeanstalk
   region: "us-east-2"
